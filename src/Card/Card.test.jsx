@@ -12,7 +12,10 @@ describe('Card', () => {
 
   it('does not render if there is no valid text content', () => {
     const props = {
-      text: ''
+      card: {
+        text: '',
+        id: '1',
+      },
     }
     render(<Card {...props}/>);
     
@@ -22,7 +25,10 @@ describe('Card', () => {
 
   it('renders text', () => {
     const props = {
-      text: 'It\'s time to update your driver\'s license'
+      card: {
+        text: 'It\'s time to update your driver\'s license',
+        id: '3',
+      },
     }
     render(<Card {...props}/>);
 
@@ -30,24 +36,5 @@ describe('Card', () => {
     const task = screen.queryByTestId('card');
     expect(task).toBeInTheDocument();
     expect(task).toHaveTextContent('It\'s time to update your driver\'s license');
-  });
-
-  it('saves and displays edits', async () => {
-    const typeFn = jest.fn();
-    const props = {
-      text: 'default',
-      edit: true,
-      type: typeFn,
-    }
-    render(<Card {...props}/>);
-
-
-    const task = screen.queryByTestId('draft');
-    expect(task).toBeInTheDocument();
-    expect(task).toHaveTextContent('default');
-
-    userEvent.type(screen.getByRole('textbox'), ' value');
-
-    expect(typeFn).toHaveBeenCalledWith('default value');
   });
 });

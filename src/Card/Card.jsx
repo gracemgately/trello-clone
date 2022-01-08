@@ -3,26 +3,43 @@ import PropTypes from 'prop-types';
 
 const textValidation = t => t;
 
-const Card = ({ text, type, edit }) => {
-    const onChange = e => {
-        type(e.target.value);
+const Draggable = ({ testId, text, id }) => {
+    const onDragStart = e => {
+        e.dataTransfer.setData("text/plain", e.target.id);
+        e.dataTransfer.dropEffect = "move";
     };
 
-    return edit ? 
-    <textarea data-testid='draft' defaultValue={text} onChange={onChange}/> : 
-    [text].filter(textValidation).map(t => <div key={t} data-testid='card'>{t}</div> );
+    return (
+        <div
+            className='card'
+            data-testid={testId}
+            id={id}
+            draggable
+            onDragStart={onDragStart}
+        >
+            {text}
+        </div>);
+};
+
+const Card = ({ card }) => {
+    return [card.text]
+        .filter(textValidation)
+        .map(() => 
+            <Draggable testId='card' key={card.id} {...card} /> );
 };
 
 export default Card;
 
 Card.propTypes = {
-    text: PropTypes.string,
-    edit: PropTypes.bool,
-    type: PropTypes.func,
+    card: PropTypes.shape({
+        text: PropTypes.string,
+        id: PropTypes.string,
+    }),
 };
 
 Card.defaultProps = {
-    text: '',
-    edit: false,
-    type: () => {},
+    card: {
+        text: '',
+        id: '0',
+    },
 };

@@ -41,9 +41,9 @@ describe('Column', () => {
     const props = {
       title: 'In Progress',
       cards: [
-        { text: 'Finish homework assignment' },
-        { text: 'Do laundry' },
-        { text: 'Call my mom' },
+        { text: 'Finish homework assignment', id: '1' },
+        { text: 'Do laundry', id: '2' },
+        { text: 'Call my mom', id: '3' },
       ],
     };
 

@@ -5,6 +5,15 @@ Assumptions made while developing this board:
 - There are only four columns on the board; the user cannot create new, edit, or delete columns
 - The user is not allowed to create infinite cards; there is a limit on the number of cards that can be in a column
 
+Where I think there's room for more work/improvement:
+- I'd like to think more about the difference between a created card and a draft
+It feels like a draft is just a version of a card (one that allows editing)
+- I'd want to add more testing around drag and drop - this feels like a functional-type test
+- I'm not super-happy with the way the cards are reordered/moved, right now I'm only
+allowing people to reorder cards above the target, but it would be better for the user to be able to move a card to the bottom of the list, too
+- It would be nice to have more typing validation on the components, as well as just generally
+some code-style validation (maybe with something like prettier)
+
 # Getting Started
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

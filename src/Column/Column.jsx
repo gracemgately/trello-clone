@@ -1,22 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Card from '../Card/Card';
-
-const Draft = ({ cancel, confirm }) => {
-    const [text, setText] = useState('Enter a title for this card');
-
-    const updateText = input => {
-        setText(input);
-    }; 
-
-    return (
-        <>
-        <Card text={text} type={updateText} edit/>
-        <button onClick={() => confirm(text)}>Add a card</button>
-        <button aria-label='Cancel' onClick={cancel}>X</button>
-        </>
-    );
-};
+import { v4 as uuid } from 'uuid';
+import Draft from '../Card/Draft'
+;import Card from '../Card/Card';
 
 const Column = ({ title, cards: initialCards }) => {
     
@@ -29,7 +15,10 @@ const Column = ({ title, cards: initialCards }) => {
     
     const addCard = text => {
         close();
-        const newCards = [...cards, { text }];
+        //eventually when these cards are stored in a db,
+        //we would call the POST endpoint here and create
+        //the card, returning an identifier back as confirmation
+        const newCards = [...cards, { text, id: uuid() }];
         setCards(newCards);
     };
     
@@ -37,11 +26,40 @@ const Column = ({ title, cards: initialCards }) => {
         setDisplayUserPrompt(!displayUserPrompt);
     };
 
+    const reorderCards = (locationId, cardToDropId) => {
+        let cardToMove = cards.filter(c => c.id === cardToDropId)[0];
+        let removeDroppedCard = cards.filter(c => c.id !== cardToDropId);
+
+        let reordered = removeDroppedCard;
+        return reordered.reduce((newCards, currentCard, index) => {
+            if (locationId === currentCard.id) {
+                newCards.splice(index, 0, cardToMove);
+            }
+            return newCards;
+        }, removeDroppedCard);
+    };
+
+    const onDragOver = e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = "move";
+    };
+
+    const onDrop = () => e => {
+        e.preventDefault();
+        var data = e.dataTransfer.getData('text/plain');
+        e.dataTransfer.clearData();
+
+        const locationForDrop = e.target.id;
+        const cardToDrop = data;
+        const reorderedCards = reorderCards(locationForDrop, cardToDrop);
+        setCards(reorderedCards);
+    };
+
     return (
-        <div>
+        <div onDrop={onDrop()} onDragOver={onDragOver} id={title}>
             { title }
 
-            { cards.map(card => <Card key={card.text} text={card.text} /> )}
+            { cards.map(card => <Card key={card.id} card={card} /> )}
             
             { displayUserPrompt ? 
                 <Draft confirm={addCard} cancel={close} />
@@ -63,7 +81,8 @@ export default Column;
 Column.propTypes = {
     title: PropTypes.string,
     cards: PropTypes.arrayOf(PropTypes.shape({
-        text: PropTypes.string
+        id: PropTypes.string,
+        text: PropTypes.string,
     })),
 };
 
