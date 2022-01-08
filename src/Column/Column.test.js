@@ -5,7 +5,8 @@ import Column from './Column';
 describe('Column', () => {  
   it('renders a title', () => {
     const props = {
-      title: 'TODO'
+      title: 'TODO',
+      addCard: () => {}
     };
 
     render(<Column {...props}/>);
@@ -16,7 +17,8 @@ describe('Column', () => {
 
   it('renders no cards by default', () => {
     const props = {
-      title: 'In Progress'
+      title: 'In Progress',
+      addCard: () => {}
     };
 
     render(<Column {...props}/>);
@@ -29,6 +31,7 @@ describe('Column', () => {
     const props = {
       title: 'In Progress',
       cards: [],
+      addCard: () => {}
     };
 
     render(<Column {...props}/>);
@@ -45,6 +48,7 @@ describe('Column', () => {
         { text: 'Do laundry', id: '2' },
         { text: 'Call my mom', id: '3' },
       ],
+      addCard: () => {}
     };
 
     render(<Column {...props}/>);
@@ -56,7 +60,9 @@ describe('Column', () => {
   it('displays the option to create a card', () => {
     const buttonText = 'Add another card';
     const props = {
-      title: 'TODO'
+      title: 'TODO',
+      addCard: () => {}
+
     };
 
     render(<Column {...props}/>);
@@ -68,7 +74,8 @@ describe('Column', () => {
   describe('Add another card', () => {
     it('prompts the user when selected', () => {
       const props = {
-        title: 'TODO'
+        title: 'TODO',
+        addCard: () => {}
       };
   
       render(<Column {...props}/>);
@@ -84,10 +91,12 @@ describe('Column', () => {
       expect(cancel).toBeInTheDocument();
     });
 
-    it('creates a card when the user confirms', async () => {
+    it('creates a card when the user confirms', () => {
+      const addCard = jest.fn();
       const props = {
         title: 'TODO',
         cards: [],
+        addCard,
       };
   
       render(<Column {...props}/>);
@@ -100,19 +109,14 @@ describe('Column', () => {
       const confirm = screen.getByRole('button', { name:'Add a card'} );
       userEvent.click(confirm);
 
-      const newCard = screen.getByTestId('card');
-      expect(newCard).toBeInTheDocument();
-      expect(newCard).toHaveTextContent('Enter a title for this card: hooray!');
-
-      await waitFor(() => {
-        expect(confirm).not.toBeInTheDocument();
-      });
+      expect(addCard).toHaveBeenCalledTimes(1);
     });
 
     it('closes the draft when the user cancels', async () => {
       const props = {
         title: 'TODO',
         cards: [],
+        addCard: () => {}
       };
   
       render(<Column {...props}/>);

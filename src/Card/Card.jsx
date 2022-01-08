@@ -11,7 +11,6 @@ const Draggable = ({ testId, text, id }) => {
 
     return (
         <div
-            className='card'
             data-testid={testId}
             id={id}
             draggable
@@ -34,6 +33,7 @@ Card.propTypes = {
     card: PropTypes.shape({
         text: PropTypes.string,
         id: PropTypes.string,
+        columnId: PropTypes.string,
     }),
 };
 
@@ -41,5 +41,6 @@ Card.defaultProps = {
     card: {
         text: '',
         id: '0',
+        columnId: '0',
     },
 };
