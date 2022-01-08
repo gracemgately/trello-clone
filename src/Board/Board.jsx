@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Column from '../Column/Column';
+import './Board.css';
 
 const Board = ({ columns, cards: initialCards }) => {
     const [cards, setCards] = useState(initialCards);
 
-    const addCard = card => {
-        const newCards = [...cards, card];
+    const addCard = (card, cardsToAddTo=cards) => {
+        const newCards = [...cardsToAddTo, card];
         setCards(newCards);
     };
 
@@ -36,14 +37,14 @@ const Board = ({ columns, cards: initialCards }) => {
         e.preventDefault();
         var data = e.dataTransfer.getData('text/plain');
         e.dataTransfer.clearData();
-        const locationForDrop = e.target.id;
 
+        const locationForDrop = e.target.id;
         const cardToDrop = data;
         const [cardMoved, filteredCards] = removeDraggedCard(cardToDrop);
         const movedCardWithNewColumn = { ...cardMoved, columnId };
 
         if (!locationForDrop) {
-            addCard(movedCardWithNewColumn);
+            addCard(movedCardWithNewColumn, filteredCards);
         }
         else {
             const reorderedCards = addCardAtLocation(locationForDrop, movedCardWithNewColumn, filteredCards);
@@ -52,9 +53,10 @@ const Board = ({ columns, cards: initialCards }) => {
     };
 
     return (
-        <div>
+        <div className='board'>
             {columns.map(column => 
-                <Column key={column.id} 
+                <Column 
+                    key={column.id} 
                     onDrop={reorderCards}
                     onDragOver={onDragOver}
                     id={column.id}

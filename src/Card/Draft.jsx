@@ -9,11 +9,13 @@ const Draft = ({ cancel, confirm }) => {
     };
 
     return (
-        <>
-        <textarea data-testid='draft' defaultValue={text} onChange={onChange}/>
-        <button onClick={() => confirm(text)}>Add a card</button>
-        <button aria-label='Cancel' onClick={cancel}>X</button>
-        </>
+        <div>
+        <textarea className='card draft' data-testid='draft' defaultValue={text} onChange={onChange}/>
+        <button className='text-button confirm' onClick={() => confirm(text)}>
+            Add a card</button>
+        <button className='text-button' aria-label='Cancel' onClick={cancel}>
+            X</button>
+        </div>
     );
 };
 

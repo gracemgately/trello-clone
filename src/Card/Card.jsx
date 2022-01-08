@@ -10,7 +10,7 @@ const Draggable = ({ testId, text, id }) => {
     };
 
     return (
-        <div
+        <div className='card' 
             data-testid={testId}
             id={id}
             draggable

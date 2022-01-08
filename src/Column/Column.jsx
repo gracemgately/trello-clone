@@ -29,18 +29,23 @@ const Column = ({ id, title, cards, addCard: addCardToColumn, onDragOver, onDrop
     };
 
     return (
-        <div id={id} onDrop={onDrop(id)} onDragOver={onDragOver}>
+        <div className='column'
+            id={id} 
+            onDrop={onDrop(id)} 
+            onDragOver={onDragOver}>
             { title }
 
-            { cards.map(card => <Card key={card.id} card={card} /> )}
-            
-            { displayUserPrompt ? 
+            <div className='column-cards'>
+                { cards.map(card => <Card key={card.id} card={card} /> )}
+                
+                { displayUserPrompt ? 
                 <Draft confirm={addCard} cancel={close} />
                 : null 
             }
+            </div>
 
             { !displayUserPrompt ? 
-                 <button onClick={toggleUserPrompt}>
+                 <button className='text-button add-card' onClick={toggleUserPrompt}>
                     Add another card
                 </button> : 
                 null 

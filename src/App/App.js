@@ -4,7 +4,7 @@ import Board from '../Board/Board';
 //this data for the user and render
 //their columns and cards
 const columns = [
-  { title: 'TODO', id: '1' },
+  { title: 'To Do', id: '1' },
   { title: 'In Progress', id: '2' },
   { title: 'QA', id: '3' },
   { title: 'Done', id: '4' },

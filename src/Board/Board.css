@@ -1,0 +1,99 @@
+.board {
+    height: calc(98.5% - .5rem);
+    padding: .5rem;
+    display: grid;
+    grid-gap: .5rem;
+    grid-template-columns: repeat(4, calc(100vw - 1rem));
+    grid-auto-flow: column;
+    grid-auto-columns: repeat(4, calc(100vw - 1rem));
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+}
+
+.column {
+    background: #ebecf0;
+    padding: 1rem;
+    border-radius: .25rem;
+    font-size: 2rem;
+    text-align: left;
+    display: grid;
+    grid-template-rows: 5% auto [cards] 5% [column-actions];
+    grid-gap: 1rem;
+    font-weight: 600;
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    scroll-snap-align: center;
+}
+
+@media screen and (min-width: 992px) {
+    .board {
+        height: calc(98.5% - .5rem);
+        padding: .5rem;
+        display: grid;
+        grid-gap: .5rem;
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-flow: column;
+        grid-auto-columns: repeat(4, 1fr);
+        overflow-x: auto;
+    }
+
+    .column {
+        background: #ebecf0;
+        padding: 1rem;
+        border-radius: .25rem;
+        font-size: 2rem;
+        text-align: left;
+        display: grid;
+        grid-template-rows: 5% auto [cards] 5% [column-actions];
+        grid-gap: 1rem;
+        font-weight: 600;
+        font-size: 18px;
+        font-family: 'Roboto', sans-serif;
+    }
+}
+
+.column-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 1rem;
+    align-content: start;
+}
+
+.card {
+    background: #ffffff;
+    border-color: #d3d2d2;
+    border-bottom-style: solid;
+    border-radius: .25rem;
+    min-height: 30px;
+    width: 100%;
+    font-weight: 400;
+    font-size: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.card.draft {
+    resize: vertical;
+}
+
+.text-button {
+    border: none;
+    background: unset;
+    font-weight: 400;
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.text-button.add-card {
+    grid-row-start: cards;
+    grid-row-end: column-actions;
+}
+
+.text-button.confirm {
+    text-align: center;
+    color: #ffffff;
+    border: none;
+    background: #5fba4c;
+    border-radius: .25rem;
+    height: 30px;
+    width: 100px;
+}
