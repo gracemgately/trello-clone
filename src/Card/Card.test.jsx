@@ -1,4 +1,5 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Card from './Card';
 
 describe('Card', () => {  
@@ -29,5 +30,24 @@ describe('Card', () => {
     const task = screen.queryByTestId('card');
     expect(task).toBeInTheDocument();
     expect(task).toHaveTextContent('It\'s time to update your driver\'s license');
+  });
+
+  it('saves and displays edits', async () => {
+    const typeFn = jest.fn();
+    const props = {
+      text: 'default',
+      edit: true,
+      type: typeFn,
+    }
+    render(<Card {...props}/>);
+
+
+    const task = screen.queryByTestId('draft');
+    expect(task).toBeInTheDocument();
+    expect(task).toHaveTextContent('default');
+
+    userEvent.type(screen.getByRole('textbox'), ' value');
+
+    expect(typeFn).toHaveBeenCalledWith('default value');
   });
 });
