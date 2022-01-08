@@ -43,12 +43,17 @@ const Board = ({ columns, cards: initialCards }) => {
         const [cardMoved, filteredCards] = removeDraggedCard(cardToDrop);
         const movedCardWithNewColumn = { ...cardMoved, columnId };
 
-        if (!locationForDrop) {
-            addCard(movedCardWithNewColumn, filteredCards);
-        }
-        else {
-            const reorderedCards = addCardAtLocation(locationForDrop, movedCardWithNewColumn, filteredCards);
-            setCards(reorderedCards);
+        //there must be better way to set this up
+        //but I found that it's possible to drop a card
+        //on a column id and I want to prevent the card from just disappearing
+        if (locationForDrop !== columnId) {
+            if (!locationForDrop) {
+                addCard(movedCardWithNewColumn, filteredCards);
+            }
+            else {
+                const reorderedCards = addCardAtLocation(locationForDrop, movedCardWithNewColumn, filteredCards);
+                setCards(reorderedCards);
+            }
         }
     };
 
