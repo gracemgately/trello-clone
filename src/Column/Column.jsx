@@ -45,9 +45,10 @@ const Column = ({ id, title, cards, addCard: addCardToColumn, onDragOver, onDrop
             </div>
 
             { !displayUserPrompt ? 
-                 <button className='text-button add-card' onClick={toggleUserPrompt}>
-                    Add another card
-                </button> : 
+                 <button 
+                    aria-label='Add another card' 
+                    className='text-button add-card' 
+                    onClick={toggleUserPrompt}>+ Add another card</button> : 
                 null 
             }
         </div>
