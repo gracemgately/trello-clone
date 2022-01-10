@@ -5,19 +5,18 @@ Full disclosure: I spent more than 2 hours on this -- more like ~5, since I was 
 
 *Assumptions made while developing this board:*
 - There are only four columns on the board; the user cannot create new, edit, or delete columns
-- The user is not allowed to create infinite cards; there is a limit on the number of cards that can be in a column
 - The "mobile/tablet" view is set by screen size rather than strictly by device (i.e. a desktop window sized the same as a tablet should also see the tablet view)
+- A user on the non-desktop view would like to have the columns the width of the device in order for it to be easier to read the cards
 
 *Where I think there's room for more work/improvement:*
-- I'd like to think more about the difference between a created card and a draft
-It feels like a draft is just a version of a card (one that allows editing)
-- I'd definitely want to add more testing around drag and drop behavior
+- I'd like to think more about the difference between a created card and a draft It feels like a draft is just a version of a card (one that allows editing)
+- I'd definitely want to add more testing around drag and drop behavior - this feels like it would make a good functional/e2e test
 - It would be nice to have more typing validation (Typescript) and some code-style validation (maybe with something like prettier)
 - Once a database is added, this will need some reworking in order to think about preserving the order of the cards as it appears on the board -- maybe each card will need to have an order of field and be sorted in the columns as per that order
-- There's a lof of filtering and sorting going on through _all_ the cards, which is definitely not ideal if you
-want to get to the point where there could be many columns and many cards in each column -- at that point it would
-be nicer to have the drag and drop events just trigger column-specific reorganization
+- There's a lof of filtering and sorting going on through _all_ the cards, which is definitely not ideal if you want to get to the point where there could be many columns and many cards in each column -- at that point it would be nicer to have the drag and drop events just trigger column-specific reorganization
 - Something I was thinking about, as well, is how we'd want to set up the API calls (or a PWA?) so that we didn't end up with a situation where a user makes some edits to their board and then loses their connection and their work "disappears" when they come back online
+- Currently the user can't pick up a card and scroll across the screen to drop it in a new column in the mobile view
+- Accessibility and semantic HTML: I'd like to spend more time on imprroving the structurer of the DOM for the elements in the columns (too many `<div>`s...), and I'd be really curious to do some research on how to make drag and drop functionality ADA-compliant
 
 # Getting Started
 
